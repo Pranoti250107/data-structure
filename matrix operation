@@ -1,0 +1,84 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int A[2][2], B[2][2], C[2][2];
+    int i, j, k, choice;
+
+    cout << "Enter matrix elements A:" << endl;
+    for(i = 0; i < 2; i++)
+        for(j = 0; j < 2; j++)
+            cin >> A[i][j];
+
+    cout << "Enter second matrix elements B:" << endl;
+    for(i = 0; i < 2; i++)
+        for(j = 0; j < 2; j++)
+            cin >> B[i][j];
+
+    cout << "\nChoose operation:" << endl;
+    cout << "1. Addition" << endl;
+    cout << "2. Subtraction" << endl;
+    cout << "3. Multiplication" << endl;
+    cout << "4. Transpose of Matrix A" << endl;
+    cout << "Enter choice: ";
+    cin >> choice;
+
+    switch(choice) {
+
+        case 1: // Addition
+            for(i = 0; i < 2; i++)
+                for(j = 0; j < 2; j++)
+                    C[i][j] = A[i][j] + B[i][j];
+
+            cout << "Addition Result:" << endl;
+            for(i = 0; i < 2; i++) {
+                for(j = 0; j < 2; j++)
+                    cout << C[i][j] << " ";
+                cout << endl;
+            }
+            break;
+
+        case 2: // Subtraction
+            for(i = 0; i < 2; i++)
+                for(j = 0; j < 2; j++)
+                    C[i][j] = A[i][j] - B[i][j];
+
+            cout << "Subtraction Result:" << endl;
+            for(i = 0; i < 2; i++) {
+                for(j = 0; j < 2; j++)
+                    cout << C[i][j] << " ";
+                cout << endl;
+            }
+            break;
+
+        case 3: // Multiplication
+            for(i = 0; i < 2; i++)
+                for(j = 0; j < 2; j++) {
+                    C[i][j] = 0;
+                    for(k = 0; k < 2; k++)
+                        C[i][j] += A[i][k] * B[k][j];
+                }
+
+            cout << "Multiplication Result:" << endl;
+            for(i = 0; i < 2; i++) {
+                for(j = 0; j < 2; j++)
+                    cout << C[i][j] << " ";
+                cout << endl;
+            }
+            break;
+
+        case 4: // Transpose
+            cout << "Transpose of Matrix A:" << endl;
+            for(i = 0; i < 2; i++) {
+                for(j = 0; j < 2; j++)
+                    cout << A[j][i] << " ";
+                cout << endl;
+            }
+            break;
+
+        default:
+            cout << "Invalid choice";
+    }
+
+    return 0;
+}
