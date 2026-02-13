@@ -1,0 +1,199 @@
+#include <iostream>
+using namespace std;
+
+/* Function Declarations */
+void bubbleSort(int a[], int n);
+void insertionSort(int a[], int n);
+void selectionSort(int a[], int n);
+void quickSort(int a[], int low, int high);
+int partition(int a[], int low, int high);
+void mergeSort(int a[], int low, int high);
+void merge(int a[], int low, int mid, int high);
+void display(int a[], int n);
+
+int main()
+{
+    int a[50], n, choice;
+
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    cout << "Enter elements:\n";
+    for(int i = 0; i < n; i++)
+        cin >> a[i];
+
+    do
+    {
+        cout << "\n--- MENU ---\n";
+        cout << "1. Bubble Sort\n";
+        cout << "2. Insertion Sort\n";
+        cout << "3. Selection Sort\n";
+        cout << "4. Quick Sort\n";
+        cout << "5. Merge Sort\n";
+        cout << "6. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch(choice)
+        {
+            case 1:
+                bubbleSort(a, n);
+                display(a, n);
+                break;
+
+            case 2:
+                insertionSort(a, n);
+                display(a, n);
+                break;
+
+            case 3:
+                selectionSort(a, n);
+                display(a, n);
+                break;
+
+            case 4:
+                quickSort(a, 0, n - 1);
+                display(a, n);
+                break;
+
+            case 5:
+                mergeSort(a, 0, n - 1);
+                display(a, n);
+                break;
+
+            case 6:
+                cout << "Exiting program...\n";
+                break;
+
+            default:
+                cout << "Invalid choice!\n";
+        }
+    } while(choice != 6);
+
+    return 0;
+}
+
+/* Bubble Sort */
+void bubbleSort(int a[], int n)
+{
+    int temp;
+    for(int i = 0; i < n - 1; i++)
+    {
+        for(int j = 0; j < n - i - 1; j++)
+        {
+            if(a[j] > a[j + 1])
+            {
+                temp = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = temp;
+            }
+        }
+    }
+}
+
+/* Insertion Sort */
+void insertionSort(int a[], int n)
+{
+    for(int i = 1; i < n; i++)
+    {
+        int key = a[i];
+        int j = i - 1;
+
+        while(j >= 0 && a[j] > key)
+        {
+            a[j + 1] = a[j];
+            j--;
+        }
+        a[j + 1] = key;
+    }
+}
+
+/* Selection Sort */
+void selectionSort(int a[], int n)
+{
+    int min, temp;
+    for(int i = 0; i < n - 1; i++)
+    {
+        min = i;
+        for(int j = i + 1; j < n; j++)
+        {
+            if(a[j] < a[min])
+                min = j;
+        }
+        temp = a[i];
+        a[i] = a[min];
+        a[min] = temp;
+    }
+}
+
+/* Quick Sort */
+void quickSort(int a[], int low, int high)
+{
+    if(low < high)
+    {
+        int pi = partition(a, low, high);
+        quickSort(a, low, pi - 1);
+        quickSort(a, pi + 1, high);
+    }
+}
+
+int partition(int a[], int low, int high)
+{
+    int pivot = a[high];
+    int i = low - 1;
+
+    for(int j = low; j < high; j++)
+    {
+        if(a[j] <= pivot)
+        {
+            i++;
+            swap(a[i], a[j]);
+        }
+    }
+    swap(a[i + 1], a[high]);
+    return i + 1;
+}
+
+/* Merge Sort */
+void mergeSort(int a[], int low, int high)
+{
+    if(low < high)
+    {
+        int mid = (low + high) / 2;
+        mergeSort(a, low, mid);
+        mergeSort(a, mid + 1, high);
+        merge(a, low, mid, high);
+    }
+}
+
+void merge(int a[], int low, int mid, int high)
+{
+    int temp[50];
+    int i = low, j = mid + 1, k = 0;
+
+    while(i <= mid && j <= high)
+    {
+        if(a[i] < a[j])
+            temp[k++] = a[i++];
+        else
+            temp[k++] = a[j++];
+    }
+
+    while(i <= mid)
+        temp[k++] = a[i++];
+
+    while(j <= high)
+        temp[k++] = a[j++];
+
+    for(i = low, k = 0; i <= high; i++, k++)
+        a[i] = temp[k];
+}
+
+/* Display */
+void display(int a[], int n)
+{
+    cout << "Sorted Array: ";
+    for(int i = 0; i < n; i++)
+        cout << a[i] << " ";
+    cout << endl;
+}
